@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import Planet from "./Planet";
 
 const fetchPlanets = async () => {
@@ -8,7 +8,11 @@ const fetchPlanets = async () => {
 };
 
 const Planets = () => {
-    const { data, status } = useQuery('planets', fetchPlanets);
+    const { data, status } = useQuery(['planets'], fetchPlanets, {
+        staleTime: 0,
+        // cacheTime: 10
+        onSuccess: () => console.log('data fetched with no problemo')
+    });
     console.log(data);
 
     return (
